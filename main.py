@@ -8,6 +8,7 @@ from functions import find_all, find_one, parse_url, get_batting, get_bowling
 
 app = FastAPI()
 
+
 @app.get("/")
 async def root():
     return {"success": True}
