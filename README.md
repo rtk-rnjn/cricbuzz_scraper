@@ -22,6 +22,8 @@ Run the script
 $ python3 main.py
 ```
 
+---
+
 
 ### Then?
 
@@ -29,7 +31,7 @@ On successful completion, you can make `get` request to `http://127.0.0.1:1729/c
 
 ```py
 >>> import requests
->>> response = requests.get('http://127.0.0.1:1729/cricket_api?url=<YOUR_URL_HERE>')
+>>> response = requests.get('http://127.0.0.1:1729/cricket_api?url=https://m.cricbuzz.com/cricket-commentary/45926/rr-vs-mi-9th-match-indian-premier-league-2022')
 >>> data = response.json()
 >>> print(data)
 ... {
