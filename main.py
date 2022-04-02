@@ -25,7 +25,7 @@ async def cricket_api(url: Optional[str] = None) -> Optional[Dict[str, Any]]:
     async with aiohttp.ClientSession() as session:
         response = await session.get(url)
         if response.status != 200:
-            raise HTTPException(status_code=400, detail="Invalid URL")
+            raise HTTPException(status_code=400, detail=f"Invalid URL - Status Code: {response.status}")
 
         html = await response.text()
 
