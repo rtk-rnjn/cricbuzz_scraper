@@ -19,7 +19,7 @@ async def cricket_api(url: Optional[str] = None) -> Optional[Dict[str, Any]]:
     if not url:
         raise HTTPException(status_code=400, detail="URL not provided")
 
-    if not url.startswith("https://m.cricbuzz.com/"):
+    if not url.startswith("https://m.cricbuzz.com/cricket-commentary/"):
         raise HTTPException(status_code=400, detail="Invalid URL")
 
     async with aiohttp.ClientSession() as session:
