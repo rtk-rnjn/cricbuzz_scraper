@@ -60,7 +60,7 @@ On successful completion, you can make `get` request to `http://127.0.0.1:1729/c
 ...         'W': ['0', '1']
 ...     }
 ...     "commentry": [
-...            "12.4 Boult to Ishan Kishan, 1 run, wider line, steered away through backward point
+...            "12.4 Boult to Ishan Kishan, 1 run, wider line, steered away through backward point"
 ...             # ...
 ...     ]
 ... }
