@@ -60,8 +60,7 @@ On successful completion, you can make `get` request to `http://127.0.0.1:1729/c
 ...         'W': ['0', '1']
 ...     }
 ...     "commentry": [
-...            "1. Rohit Sharma c Riyan Parag b Prasidh 10(5) - 15/1 in 1.5 ov.",
-...            "2. Rohit Sharma c Riyan Parag b Prasidh 10(5) - 15/1 in 1.5 ov.",
+...            "12.4 Boult to Ishan Kishan, 1 run, wider line, steered away through backward point
 ...             # ...
 ...     ]
 ... }
