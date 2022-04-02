@@ -14,11 +14,55 @@ $ cd cricbuzz_scraper
 
 Install the requirements
 ```bash
-$ poetry shell
-$ poetry install
+$ pip install -r requirements.txt
 ```
 
 Run the script
 ```bash
 $ python3 main.py
 ```
+
+
+### Then?
+
+On successful completion, you can make `get` request to `http://127.0.0.1:1729/cricket_api` to get the data.
+
+```py
+>>> import requests
+>>> response = requests.get('http://127.0.0.1:1729/cricket_api?url=<YOUR_URL_HERE>')
+>>> data = response.json()
+>>> print(data)
+... {
+...     'success': True, 
+...     'title': 'Mumbai Indians vs Rajasthan Royals, 9th Match',
+...     'status': 'Mumbai Indians need 170 runs',
+...     'team_one': 'RR - 193/8 (20)', 'team_two': 'MI - 24/1 (3)',
+...     'crr': ['CRR: \xa08.00', 'RR : \xa010.00'],
+...     'extra': [
+...         ['Partnership: ', '9(7)'],
+...         ['Last wkt: ', 'Rohit Sharma c Riyan Parag b Prasidh 10(5) - 15/1 in 1.5 ov.'],
+...         ['Recent balls: ', '... | 2 6 Wd 2 0 W 4 | 1 1 2 0 0 1']
+...     ],
+...     'batting': {
+...         'Batting': ['Anmolpreet Singh', 'Ishan Kishan*'], 
+...         'R(B)': ['5(2)', '8(11)'],
+...         '4s': ['1', '1'],
+...         '6s': ['0', '0'],
+...         'SR': ['250', '72.73']
+...     },
+...     'bowling': {
+...         'Bowling': ['Trent Boult', 'Prasidh Krishna*'],
+...         'O': ['2', '1'],
+...         'M': ['0', '0'],
+...         'R': ['9', '15'],
+...         'W': ['0', '1']
+...     }
+...     "commentry": [
+...            "1. Rohit Sharma c Riyan Parag b Prasidh 10(5) - 15/1 in 1.5 ov.",
+...            "2. Rohit Sharma c Riyan Parag b Prasidh 10(5) - 15/1 in 1.5 ov.",
+...             # ...
+...     ]
+... }
+>>> 
+```
+> **Note:** May not get `batting` and `bowling` data if there is any website problem
