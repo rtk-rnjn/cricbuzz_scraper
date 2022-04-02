@@ -4,7 +4,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
 
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Dict
 
 from bs4 import BeautifulSoup
 from html import unescape
@@ -12,13 +12,13 @@ import re
 
 
 class ToAsync:
-    def __init__(self, *, executor: Optional[ThreadPoolExecutor] = None):
+    def __init__(self, *, executor: Optional[ThreadPoolExecutor] = None) -> None:
 
         self.executor = executor
 
-    def __call__(self, blocking):
+    def __call__(self, blocking) -> Any:
         @wraps(blocking)
-        async def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs) -> Any:
 
             loop = asyncio.get_event_loop()
             if not self.executor:
@@ -40,20 +40,24 @@ def parse_text(st: str) -> str:
 
 
 @ToAsync()
-def find_one(soup: BeautifulSoup, name: str, **kwargs: Any) -> Optional[str]:
+def find_one(
+    soup: BeautifulSoup, name: str, **kwargs: Any
+) -> Optional[str]:
 
     if finder := soup.find(name, kwargs):
         return __parse_text(finder.text)
 
-    return "Data not available"
+    return None
 
 
 @ToAsync()
-def find_all(soup: BeautifulSoup, name: str, **kwargs: Any) -> Optional[List[str]]:
+def find_all(
+    soup: BeautifulSoup, name: str, **kwargs: Any
+) -> Optional[List[str]]:
     if finder := soup.find_all(name, kwargs):
         return [__parse_text(i.text) for i in finder]
 
-    return ["Data not available"]
+    return []
 
 
 @ToAsync()
@@ -63,19 +67,27 @@ def parse_url(html: str) -> BeautifulSoup:
 
 @ToAsync()
 def get_batting(soup: BeautifulSoup) -> Dict[str, Any]:
-    table = soup.find_all("table", {"class": "table table-condensed"})
     data = [
-        [__parse_text(i.text) for i in mini_table.find_all("td")] for mini_table in table
+        [
+            __parse_text(i.text) for i in mini_table.find_all("td")
+        ] for mini_table in soup.find_all(
+                    "table", {"class": "table table-condensed"}
+                )
     ]
-    i = data[0]
-    return dict(zip(i, zip(i[10:], i[5:10])))
+    if not data:
+        return {}
+    return dict(zip(data[0], zip(data[0][10:], data[0][5:10])))
 
 
 @ToAsync()
 def get_bowling(soup: BeautifulSoup) -> Dict[str, Any]:
     data = [
-        [__parse_text(i.text) for i in mini_table.find_all("td")] for mini_table in soup.find_all("table", {"class": "table table-condensed"})
+        [
+            __parse_text(i.text) for i in mini_table.find_all("td")
+        ] for mini_table in soup.find_all(
+                    "table", {"class": "table table-condensed"}
+                )
     ]
-    i = data[1]
-    return dict(zip(i, zip(i[10:], i[5:10])))
-  
+    if not data:
+        return {}
+    return dict(zip(data[1], zip(data[1][10:], data[1][5:10])))
