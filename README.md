@@ -29,7 +29,7 @@ $ python3 main.py
 
 On successful completion, you can make `get` request to `http://127.0.0.1:1729/cricket_api` to get the data.
 
-```py
+```python
 >>> import requests
 >>> response = requests.get('http://127.0.0.1:1729/cricket_api?url=https://m.cricbuzz.com/cricket-commentary/45926/rr-vs-mi-9th-match-indian-premier-league-2022')
 >>> data = response.json()

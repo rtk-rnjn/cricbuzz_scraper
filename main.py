@@ -5,6 +5,8 @@ import uvicorn
 import aiohttp
 from fastapi import FastAPI, HTTPException
 from functions import find_all, find_one, parse_url, get_batting, get_bowling
+from random_agents import AGENTS
+import random
 
 app = FastAPI()
 
@@ -23,7 +25,7 @@ async def cricket_api(url: Optional[str] = None) -> Optional[Dict[str, Any]]:
         raise HTTPException(status_code=400, detail="Invalid URL")
 
     async with aiohttp.ClientSession() as session:
-        response = await session.get(url)
+        response = await session.get(url, headers={"User-Agent": random.choice(AGENTS)})
         if response.status != 200:
             raise HTTPException(status_code=400, detail=f"Invalid URL - Status Code: {response.status}")
 
