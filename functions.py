@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
-
-from typing import Any, List, Optional, Dict
-
-from bs4 import BeautifulSoup
 from html import unescape
+
 import re
+from typing import Any, Callable, List, Optional, Dict
 
 
 class ToAsync:
@@ -16,7 +15,7 @@ class ToAsync:
 
         self.executor = executor
 
-    def __call__(self, blocking) -> Any:
+    def __call__(self, blocking) -> Callable:
         @wraps(blocking)
         async def wrapper(*args, **kwargs) -> Any:
 
@@ -62,7 +61,7 @@ def find_all(
 
 @ToAsync()
 def parse_url(html: str) -> BeautifulSoup:
-    return BeautifulSoup(html, "html.parser")
+    return BeautifulSoup(html, "lxml")
 
 
 @ToAsync()
